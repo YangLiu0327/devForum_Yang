@@ -1,6 +1,6 @@
 const Post = require('../models/Post');
 const User = require('../models/user');
-// const auth = require('../middleware/auth');
+
 const { validationResult } = require("express-validator");
 
 
@@ -100,9 +100,9 @@ const addLike = async (req, res) => {
     const userData = await User.findById(user.id).select('-password');
     console.log(userData)
     console.log(userData.id.toString(), user.id)
+    console.log(post.likes,'likes')
     if (
       // userData._id.toString() === user.id
-      // 如果再次点赞会报错
       post.likes.filter(like => like.user.toString() === user.id ).length > 0
     ) {
       return res.status(400).json({ msg: 'Post already liked' })
@@ -148,3 +148,4 @@ module.exports = {
   addLike,
   deleteLike
 };
+
