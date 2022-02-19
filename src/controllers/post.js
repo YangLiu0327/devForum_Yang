@@ -23,7 +23,7 @@ const createPost = async (req, res) => {
     const newPost = new Post({
       text: req.body.text,
       name: userData.name,
-      user: req.user.id
+      user: user.id
     })
     const post = await newPost.save();
     res.json(post)
@@ -72,9 +72,9 @@ const deletePost = async (req, res) => {
     }
     // check user
     const { user } = req.user;
-    // console.log(user.id)
-    const userData = await User.findById(user.id).select('-password');
-    if (userData.id.toString() !== user.id) {
+    console.log(user.id)
+    // const userData = await User.findById(user.id).select('-password');
+    if (post.user.toString() !== user.id) {
       console.log(user.id)
       return res.status(401).json({ msg: 'User not authorized' })
     }
@@ -148,4 +148,3 @@ module.exports = {
   addLike,
   deleteLike
 };
-
